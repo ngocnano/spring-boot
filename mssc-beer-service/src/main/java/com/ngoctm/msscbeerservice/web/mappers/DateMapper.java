@@ -1,0 +1,31 @@
+package com.ngoctm.msscbeerservice.web.mappers;
+
+import org.springframework.stereotype.Component;
+
+import java.sql.Timestamp;
+import java.time.OffsetDateTime;
+import java.time.ZoneOffset;
+
+@Component
+public class DateMapper {
+
+    public OffsetDateTime asOffsetDateTime(Timestamp timestamp){
+
+        if(timestamp != null){
+            return OffsetDateTime.of(timestamp.toLocalDateTime().getYear(), timestamp.toLocalDateTime().getMonthValue(),
+                    timestamp.toLocalDateTime().getDayOfMonth(), timestamp.toLocalDateTime().getHour(),
+                    timestamp.toLocalDateTime().getMinute(), timestamp.toLocalDateTime().getSecond(),
+                    timestamp.toLocalDateTime().getNano(), ZoneOffset.UTC);
+        } else {
+            return null;
+        }
+    }
+
+    public Timestamp asTimestamp(OffsetDateTime ot){
+        if(ot != null){
+            return Timestamp.valueOf(ot.atZoneSameInstant(ZoneOffset.UTC).toLocalDateTime());
+        } else {
+            return null;
+        }
+    }
+}
